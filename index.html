@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aviation Project – Apple Style</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        background: #ffffff;
+        color: #111;
+        overflow-x: hidden;
+    }
+
+    /* HERO */
+    .hero {
+        height: 100vh;
+        background: url('background.png') center/cover no-repeat fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        padding: 20px;
+        opacity: 0;
+        animation: fadeInHero 1.8s ease forwards;
+    }
+
+    @keyframes fadeInHero {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero h1 {
+        font-size: 4rem;
+        font-weight: 700;
+        text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        animation: titleFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes titleFloat {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0); }
+    }
+
+    /* SECTIONS */
+    section {
+        max-width: 900px;
+        margin: 80px auto;
+        padding: 20px;
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+        transition: 1s ease;
+        background: rgba(255,255,255,0.6);
+        backdrop-filter: blur(8px);
+        border-radius: 14px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    }
+
+    section.show {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        color: #0a0a0a;
+    }
+
+    p {
+        font-size: 1.3rem;
+        line-height: 1.7;
+        color: #333;
+    }
+
+    /* PARALLAX BLOCKS */
+    .parallax1, .parallax2, .parallax3 {
+        height: 70vh;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        margin: 60px 0;
+        filter: brightness(0.9);
+        transition: filter 0.5s ease;
+    }
+
+    .parallax1:hover, .parallax2:hover, .parallax3:hover {
+        filter: brightness(1);
+    }
+
+    .parallax1 { background-image: url('avion despegando.jpg'); }
+    .parallax2 { background-image: url('avion volando.png'); }
+    .parallax3 { background-image: url('avion aterrizando.jpg'); }
+
+    /* TIMELINE STEPS */
+    .steps-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+        margin-top: 40px;
+    }
+
+    .step-card {
+        background: white;
+        padding: 25px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        transition: 0.4s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        border-left: 6px solid #007aff;
+    }
+
+    .step-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+
+    .step-card img {
+        width: 55px;
+        margin-bottom: 15px;
+        opacity: 0.9;
+    }
+
+    .step-card h3 {
+        margin: 0;
+        font-size: 1.6rem;
+        color: #0a0a0a;
+    }
+
+    .step-card p {
+        margin-top: 10px;
+        font-size: 1.1rem;
+        color: #444;
+    }
+
+    @media (max-width: 800px) {
+        .steps-container {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    footer {
+        text-align: center;
+        padding: 40px;
+        background: #1a1a1a;
+        color: #fff;
+        margin-top: 80px;
+        font-size: 1rem;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+    <div>
+        <h1>Learning to Fly</h1>
+        <p style="font-size: 1.2rem; color: #e5e5e5; margin-top: 10px;">By: David Daza Salcedo</p>
+    </div>
+</div>
+
+<section>
+    <h2>My Project</h2>
+    <p>For my Genius Hour project, I am learning how to fly an airplane using a flight simulator. 
+    My goal is not only to practice basic flying, but to understand how real aviation works from the inside out. 
+    Throughout this project, I am studying how pilots control an aircraft, how takeoff and landing procedures are performed, 
+    and how navigation systems guide a plane safely from one point to another. 
+    I am also learning to read essential cockpit instruments, manage altitude and airspeed, 
+    and follow realistic flight protocols used in actual aviation training. 
+    By the end of this project, I want to be able to complete a full flight—from runway to runway—using real techniques, 
+    real procedures, and real aviation knowledge.</p>
+</section>
+
+<div class="parallax1"></div>
+
+<section>
+    <h2>Why Aviation?</h2>
+    <p>
+        Aviation has always inspired me. There is something powerful about watching an aircraft take off, 
+        knowing that a combination of physics, engineering, and human skill makes flight possible. 
+        Using a simulator allows me to explore this world safely while still experiencing the realism 
+        of controlling an actual aircraft. Through each session, I get closer to understanding how pilots 
+        think, react, and make decisions in the air. This project is not just about flying — it’s about 
+        learning discipline, precision, and the science behind one of humanity’s greatest achievements.
+    </p>
+</section>
+
+<section>
+    <h2>Steps Learning Plan</h2>
+
+    <div class="steps-container">
+
+        <div class="step-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3208/3208750.png">
+            <h3>Step 1 — Basic Controls</h3>
+            <p>Throttle, yoke, rudder, lift, drag, thrust and weight. Understanding how each control affects the aircraft.</p>
+        </div>
+
+        <div class="step-card">
+            <img src="avion paso 2.png">
+            <h3>Step 2 — Takeoff & Stable Flight</h3>
+            <p>Runway alignment, rotation speed, climb rate, trimming and maintaining stable altitude and heading.</p>
+        </div>
+
+        <div class="step-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/535/535239.png">
+            <h3>Step 3 — Navigation & Instruments</h3>
+            <p>Reading altimeter, airspeed, attitude indicator, compass and VFR navigation techniques.</p>
+        </div>
+
+        <div class="step-card">
+            <img src="avion paso 4.png">
+            <h3>Step 4 — Landing & Final Flight</h3>
+            <p>Approach patterns, descent control, flare timing and completing a full realistic flight.</p>
+        </div>
+
+    </div>
+</section>
+
+<div class="parallax2"></div>
+
+<section>
+    <h2>Final Product</h2>
+    <p>
+        My final product will be a fully recorded demonstration flight where I apply everything I learned 
+        throughout the project. The video will show me performing a complete flight in a simulator — 
+        from takeoff to navigation to landing — using real aviation techniques. 
+        This recording will serve as proof of my progress and as a visual summary of my understanding 
+        of how pilots operate an aircraft in real life.
+    </p>
+</section>
+
+<div class="parallax3"></div>
+
+<section>
+    <h2>Final demonstration</h2>
+    <p>
+        This is the final recorded flight where I apply everything I learned during my aviation project. 
+        From takeoff to landing, this video shows the complete process using real aviation techniques.
+    </p>
+</section>
+
+<div style="text-align: center; margin-top: 20px;">
+    <iframe 
+        width="70%" 
+        height="700" 
+        src="https://www.youtube.com/embed/wZQDH5EsYfo" 
+        frameborder="0" 
+        allowfullscreen
+        style="border-radius: 10px;">
+    </iframe>
+</div>
+
+<footer>
+    Created by: David Daza Salcedo
+</footer>
+
+<script>
+    // Scroll reveal
+    const sections = document.querySelectorAll("section");
+    const reveal = () => {
+        sections.forEach(sec => {
+            const top = sec.getBoundingClientRect().top;
+            if (top < window.innerHeight - 100) {
+                sec.classList.add("show");
+            }
+        });
+    };
+    window.addEventListener("scroll", reveal);
+    reveal();
+</script>
+
+</body>
+</html>
