@@ -17,7 +17,7 @@
     /* HERO */
     .hero {
         height: 100vh;
-        background: url('background.png') center/cover no-repeat;
+        background: url('background.png') center/cover no-repeat fixed;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -34,7 +34,7 @@
     }
 
     .hero h1 {
-        font-size: clamp(2.2rem, 6vw, 4rem);
+        font-size: 4rem;
         font-weight: 700;
         text-shadow: 0 4px 20px rgba(0,0,0,0.5);
         animation: titleFloat 4s ease-in-out infinite;
@@ -77,11 +77,12 @@
         color: #333;
     }
 
-    /* PARALLAX FIX */
+    /* PARALLAX BLOCKS */
     .parallax1, .parallax2, .parallax3 {
-        height: 60vh;
+        height: 70vh;
         background-size: cover;
         background-position: center;
+        background-attachment: fixed;
         margin: 60px 0;
         filter: brightness(0.9);
         transition: filter 0.5s ease;
@@ -94,31 +95,6 @@
     .parallax1 { background-image: url('avion despegando.jpg'); }
     .parallax2 { background-image: url('avion volando.png'); }
     .parallax3 { background-image: url('avion aterrizando.jpg'); }
-
-    /* MOBILE FIX */
-    @media (max-width: 900px) {
-        .parallax1, .parallax2, .parallax3 {
-            background-attachment: scroll !important;
-            height: 40vh;
-        }
-
-        section {
-            margin: 40px 15px;
-            padding: 20px;
-        }
-
-        p {
-            font-size: 1.1rem;
-        }
-
-        h2 {
-            font-size: 2rem;
-        }
-
-        .hero {
-            padding: 40px 20px;
-        }
-    }
 
     /* TIMELINE STEPS */
     .steps-container {
@@ -272,10 +248,12 @@
 
 <div style="text-align: center; margin-top: 20px;">
     <iframe 
-        style="width: 90%; height: 50vh; border-radius: 10px;"
+        width="70%" 
+        height="700" 
         src="https://www.youtube.com/embed/wZQDH5EsYfo" 
         frameborder="0" 
-        allowfullscreen>
+        allowfullscreen
+        style="border-radius: 10px;">
     </iframe>
 </div>
 
