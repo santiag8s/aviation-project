@@ -77,24 +77,30 @@
         color: #333;
     }
 
-    /* PARALLAX BLOCKS */
-    .parallax1, .parallax2, .parallax3 {
+    /* PARALLAX MODERNO */
+    .parallax {
+        position: relative;
         height: 70vh;
+        overflow: hidden;
+        margin: 60px 0;
+    }
+
+    .parallax-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 120%;
         background-size: cover;
         background-position: center;
-        background-attachment: scroll;
-        margin: 60px 0;
+        will-change: transform;
+        transition: transform 0.1s linear;
         filter: brightness(0.9);
-        transition: filter 0.5s ease;
     }
 
-    .parallax1:hover, .parallax2:hover, .parallax3:hover {
+    .parallax:hover .parallax-img {
         filter: brightness(1);
     }
-
-    .parallax1 { background-image: url('avion despegando.jpg'); }
-    .parallax2 { background-image: url('avion volando.png'); }
-    .parallax3 { background-image: url('avion aterrizando.jpg'); }
 
     /* TIMELINE STEPS */
     .steps-container {
@@ -156,17 +162,6 @@
 </style>
 </head>
 
-<script>
-document.addEventListener("scroll", () => {
-    document.querySelectorAll(".parallax").forEach(el => {
-        let speed = 0.4; // ajusta la velocidad
-        let yPos = window.scrollY * speed;
-        el.style.backgroundPosition = `center calc(50% + ${yPos}px)`;
-    });
-});
-</script>
-
-
 <body>
 
 <div class="hero">
@@ -188,7 +183,10 @@ document.addEventListener("scroll", () => {
     real procedures, and real aviation knowledge.</p>
 </section>
 
-<div class="parallax1"></div>
+<!-- PARALLAX 1 -->
+<div class="parallax">
+    <div class="parallax-img" style="background-image: url('avion despegando.jpg');"></div>
+</div>
 
 <section>
     <h2>Why Aviation?</h2>
@@ -234,7 +232,10 @@ document.addEventListener("scroll", () => {
     </div>
 </section>
 
-<div class="parallax2"></div>
+<!-- PARALLAX 2 -->
+<div class="parallax">
+    <div class="parallax-img" style="background-image: url('avion volando.png');"></div>
+</div>
 
 <section>
     <h2>Final Product</h2>
@@ -247,7 +248,10 @@ document.addEventListener("scroll", () => {
     </p>
 </section>
 
-<div class="parallax3"></div>
+<!-- PARALLAX 3 -->
+<div class="parallax">
+    <div class="parallax-img" style="background-image: url('avion aterrizando.jpg');"></div>
+</div>
 
 <section>
     <h2>Final demonstration</h2>
@@ -273,18 +277,29 @@ document.addEventListener("scroll", () => {
 </footer>
 
 <script>
-    // Scroll reveal
-    const sections = document.querySelectorAll("section");
-    const reveal = () => {
-        sections.forEach(sec => {
-            const top = sec.getBoundingClientRect().top;
-            if (top < window.innerHeight - 100) {
-                sec.classList.add("show");
-            }
-        });
-    };
-    window.addEventListener("scroll", reveal);
-    reveal();
+/* PARALLAX SCRIPT */
+window.addEventListener("scroll", () => {
+    document.querySelectorAll(".parallax").forEach(section => {
+        const img = section.querySelector(".parallax-img");
+        const rect = section.getBoundingClientRect();
+        const scrollPercent = rect.top / window.innerHeight;
+        const move = scrollPercent * 40;
+        img.style.transform = `translateY(${move}px)`;
+    });
+});
+
+/* SCROLL REVEAL */
+const sections = document.querySelectorAll("section");
+const reveal = () => {
+    sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if (top < window.innerHeight - 100) {
+            sec.classList.add("show");
+        }
+    });
+};
+window.addEventListener("scroll", reveal);
+reveal();
 </script>
 
 </body>
