@@ -3,15 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aviation Project – Apple Style</title>
+<title>Aviation Project – Learning to Fly</title>
 
 <style>
-    body {
+    * {
         margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
         background: #ffffff;
         color: #111;
         overflow-x: hidden;
+    }
+
+    /* NAVEGACIÓN STICKY */
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        padding: 15px 40px;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    nav.visible {
+        transform: translateY(0);
+    }
+
+    nav a {
+        margin: 0 20px;
+        text-decoration: none;
+        color: #0a0a0a;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+        color: #007aff;
     }
 
     /* HERO */
@@ -24,6 +63,21 @@
         text-align: center;
         color: white;
         padding: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.3);
+        z-index: 1;
+    }
+
+    .hero > div {
+        position: relative;
+        z-index: 2;
         opacity: 0;
         animation: fadeInHero 1.8s ease forwards;
     }
@@ -34,30 +88,65 @@
     }
 
     .hero h1 {
-        font-size: 4rem;
+        font-size: 4.5rem;
         font-weight: 700;
         text-shadow: 0 4px 20px rgba(0,0,0,0.5);
         animation: titleFloat 4s ease-in-out infinite;
+        letter-spacing: 2px;
+    }
+
+    .hero p {
+        font-size: 1.4rem;
+        margin-top: 15px;
+        animation: fadeIn 2s ease 0.3s backwards;
     }
 
     @keyframes titleFloat {
-        0% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-        100% { transform: translateY(0); }
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* SCROLL INDICATOR */
+    .scroll-indicator {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        animation: bounce 2s infinite;
+    }
+
+    .scroll-indicator svg {
+        width: 30px;
+        height: 30px;
+        stroke: white;
+        stroke-width: 2;
+        fill: none;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(10px); }
     }
 
     /* SECTIONS */
     section {
         max-width: 900px;
         margin: 80px auto;
-        padding: 20px;
+        padding: 40px;
         opacity: 0;
         transform: translateY(40px) scale(0.98);
         transition: 1s ease;
-        background: rgba(255,255,255,0.6);
+        background: rgba(255,255,255,0.8);
         backdrop-filter: blur(8px);
-        border-radius: 14px;
+        border-radius: 20px;
         box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        border: 1px solid rgba(255,255,255,0.5);
     }
 
     section.show {
@@ -66,46 +155,75 @@
     }
 
     h2 {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
+        font-size: 2.8rem;
+        margin-bottom: 20px;
         color: #0a0a0a;
+        background: linear-gradient(135deg, #007aff, #0051d5);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
     p {
-        font-size: 1.3rem;
-        line-height: 1.7;
+        font-size: 1.15rem;
+        line-height: 1.8;
         color: #333;
     }
 
-    /* PARALLAX BLOCKS (como antes, pero sin fixed) */
+    /* PARALLAX BLOCKS */
     .parallax1, .parallax2, .parallax3 {
         height: 70vh;
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
         margin: 60px 0;
-        filter: brightness(0.9);
-        transition: filter 0.5s ease;
+        filter: brightness(0.85);
+        transition: filter 0.5s ease, transform 0.5s ease;
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        cursor: pointer;
     }
 
     .parallax1:hover, .parallax2:hover, .parallax3:hover {
         filter: brightness(1);
+        transform: scale(1.02);
     }
+
     .parallax1 { background-image: url('avion despegando.jpg'); }
     .parallax2 { background-image: url('avion volando.png'); }
     .parallax3 { background-image: url('avion aterrizando.jpg'); }
 
-    /* TIMELINE STEPS */
+    /* PROGRESS BAR */
+    .progress-container {
+        width: 100%;
+        background: rgba(0,0,0,0.1);
+        height: 8px;
+        border-radius: 10px;
+        margin: 30px 0;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #007aff, #0051d5);
+        width: 0%;
+        border-radius: 10px;
+        transition: width 0.3s ease;
+        box-shadow: 0 0 10px #007aff;
+    }
+
+    /* STEPS CONTAINER */
     .steps-container {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 25px;
+        gap: 30px;
         margin-top: 40px;
     }
 
     .step-card {
-        background: white;
-        padding: 25px;
+        background: linear-gradient(135deg, rgba(0, 122, 255, 0.05), rgba(0, 81, 213, 0.05));
+        padding: 30px;
         border-radius: 16px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         transition: 0.4s ease;
@@ -113,15 +231,35 @@
         flex-direction: column;
         align-items: flex-start;
         border-left: 6px solid #007aff;
+        border: 2px solid rgba(0, 122, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .step-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.5s ease;
     }
 
     .step-card:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        transform: translateY(-12px) scale(1.03);
+        box-shadow: 0 20px 50px rgba(0, 122, 255, 0.2);
+        border-left-color: #0051d5;
+    }
+
+    .step-card:hover::before {
+        left: 100%;
     }
 
     .step-card img {
-        width: 55px;
+        width: 60px;
         margin-bottom: 15px;
         opacity: 0.9;
     }
@@ -130,147 +268,493 @@
         margin: 0;
         font-size: 1.6rem;
         color: #0a0a0a;
+        position: relative;
+        z-index: 1;
     }
 
     .step-card p {
         margin-top: 10px;
-        font-size: 1.1rem;
-        color: #444;
+        font-size: 1rem;
+        color: #555;
+        position: relative;
+        z-index: 1;
     }
 
+    .step-card .details {
+        margin-top: 15px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        position: relative;
+        z-index: 1;
+    }
+
+    .step-card.expanded .details {
+        max-height: 300px;
+    }
+
+    .step-card .btn-expand {
+        margin-top: 10px;
+        background: #007aff;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background 0.3s ease;
+        position: relative;
+        z-index: 1;
+    }
+
+    .step-card .btn-expand:hover {
+        background: #0051d5;
+    }
+
+    /* MILESTONES */
+    .milestones-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .milestone {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .milestone:hover {
+        transform: translateX(10px);
+    }
+
+    .milestone input[type="checkbox"] {
+        width: 24px;
+        height: 24px;
+        margin-right: 15px;
+        cursor: pointer;
+        accent-color: #007aff;
+    }
+
+    .milestone label {
+        cursor: pointer;
+        flex: 1;
+        font-weight: 500;
+        color: #0a0a0a;
+    }
+
+    .milestone input[type="checkbox"]:checked + label {
+        color: #999;
+        text-decoration: line-through;
+    }
+
+    /* VIDEO SECTION */
+    .video-container {
+        max-width: 100%;
+        margin: 40px auto;
+        text-align: center;
+        background: rgba(0,0,0,0.05);
+        padding: 30px;
+        border-radius: 20px;
+    }
+
+    .video-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        aspect-ratio: 16 / 9;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .video-wrapper:hover {
+        transform: scale(1.02);
+    }
+
+    .video-wrapper iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80px;
+        height: 80px;
+        background: rgba(255,255,255,0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        cursor: pointer;
+        transition: 0.3s ease;
+        z-index: 10;
+    }
+
+    .play-button:hover {
+        background: white;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    /* FOOTER */
+    footer {
+        text-align: center;
+        padding: 50px 20px;
+        background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+        color: #fff;
+        margin-top: 80px;
+        font-size: 1rem;
+    }
+
+    footer p {
+        margin: 10px 0;
+        color: #ccc;
+    }
+
+    .social-links {
+        margin-top: 20px;
+    }
+
+    .social-links a {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background: #007aff;
+        border-radius: 50%;
+        margin: 0 8px;
+        transition: 0.3s ease;
+        text-decoration: none;
+        line-height: 40px;
+        color: white;
+    }
+
+    .social-links a:hover {
+        background: #0051d5;
+        transform: translateY(-5px);
+    }
+
+    /* VERTICAL PROGRESS BAR */
+    .progress-tracker {
+        position: fixed;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .progress-track {
+        width: 6px;
+        height: 400px;
+        background: rgba(0, 122, 255, 0.2);
+        border-radius: 10px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 122, 255, 0.3);
+    }
+
+    .progress-fill {
+        width: 100%;
+        height: 0%;
+        background: linear-gradient(to top, #007aff, #0051d5);
+        border-radius: 10px;
+        transition: height 0.1s linear;
+        box-shadow: 0 0 15px #007aff;
+    }
+
+    .plane-indicator {
+        font-size: 2.5rem;
+        animation: planeRotate 2s ease-in-out infinite;
+        text-shadow: 0 0 10px rgba(0, 122, 255, 0.5);
+        filter: drop-shadow(0 0 8px #007aff);
+    }
+
+    @keyframes planeRotate {
+        0%, 100% { transform: rotateZ(0deg); }
+        50% { transform: rotateZ(5deg); }
+    }
+
+    .progress-text {
+        font-size: 0.85rem;
+        font-weight: bold;
+        color: #007aff;
+        background: white;
+        padding: 4px 8px;
+        border-radius: 6px;
+        box-shadow: 0 2px 10px rgba(0, 122, 255, 0.3);
+        min-width: 35px;
+        text-align: center;
+    }
+
+        /* RESPONSIVE */
     @media (max-width: 800px) {
         .steps-container {
             grid-template-columns: 1fr;
         }
+
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        nav {
+            flex-direction: column;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        nav a {
+            margin: 5px;
+            font-size: 0.9rem;
+        }
+
+        section {
+            padding: 25px;
+            margin: 40px 15px;
+        }
     }
 
-    footer {
-        text-align: center;
-        padding: 40px;
-        background: #1a1a1a;
-        color: #fff;
-        margin-top: 80px;
-        font-size: 1rem;
+    /* ANIMATIONS */
+    @keyframes slideIn {
+        from { transform: translateX(-50px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+
+    .counter {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #007aff;
+        animation: slideIn 0.6s ease;
     }
 </style>
 </head>
 
 <body>
+<!-- VERTICAL PROGRESS TRACKER -->
+<div class="progress-tracker">
+    <div class="progress-text" id="progressPercentage">0%</div>
+    <div class="plane-indicator">✈️</div>
+    <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div style="font-size: 0.75rem; font-weight: bold; color: #007aff; background: white; padding: 4px 8px; border-radius: 6px; box-shadow: 0 2px 10px rgba(0, 122, 255, 0.3); text-align: center; width: 50px;">Final Flight</div>
+</div>
+</div>
 
+
+<!-- NAVEGACIÓN STICKY -->
+<nav id="navbar">
+    <div style="font-weight: bold; font-size: 1.3rem; color: #007aff;">✈️ Aviation</div>
+    <div>
+        <a href="#project">Project</a>
+        <a href="#why">Why?</a>
+        <a href="#steps">Steps</a>
+        <a href="#video">Video</a>
+    </div>
+</nav>
+
+<!-- HERO SECTION -->
 <div class="hero">
     <div>
-        <h1>Learning to Fly</h1>
-        <p style="font-size: 1.2rem; color: #e5e5e5; margin-top: 10px;">By: David Daza Salcedo</p>
+        <h1>✈️ Learning to Fly</h1>
+        <p style="font-size: 1.4rem; color: #e5e5e5; margin-top: 15px;">By: David Daza Salcedo</p>
+        <p style="font-size: 1rem; color: #b0b0b0; margin-top: 8px;">Mastering Aviation Through Simulation</p>
+    </div>
+    <div class="scroll-indicator">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 5v14M5 12l7 7 7-7"></path>
+        </svg>
     </div>
 </div>
 
-<section>
-    <h2>My Project</h2>
+<!-- PROJECT SECTION -->
+<section id="project">
+    <h2>🎯 My Project</h2>
     <p>For my Genius Hour project, I am learning how to fly an airplane using a flight simulator. 
     My goal is not only to practice basic flying, but to understand how real aviation works from the inside out. 
     Throughout this project, I am studying how pilots control an aircraft, how takeoff and landing procedures are performed, 
-    and how navigation systems guide a plane safely from one point to another. 
-    I am also learning to read essential cockpit instruments, manage altitude and airspeed, 
-    and follow realistic flight protocols used in actual aviation training. 
-    By the end of this project, I want to be able to complete a full flight—from runway to runway—using real techniques, 
-    real procedures, and real aviation knowledge.</p>
+    and how navigation systems guide a plane safely from one point to another.</p>
+    
 </section>
 
+<!-- PARALLAX 1 -->
 <div class="parallax1"></div>
 
-<section>
-    <h2>Why Aviation?</h2>
+<!-- WHY AVIATION SECTION -->
+<section id="why">
+    <h2>💫 Why Aviation?</h2>
     <p>
         Aviation has always inspired me. There is something powerful about watching an aircraft take off, 
         knowing that a combination of physics, engineering, and human skill makes flight possible. 
         Using a simulator allows me to explore this world safely while still experiencing the realism 
         of controlling an actual aircraft. Through each session, I get closer to understanding how pilots 
-        think, react, and make decisions in the air. This project is not just about flying — it’s about 
-        learning discipline, precision, and the science behind one of humanity’s greatest achievements.
+        think, react, and make decisions in the air. This project is not just about flying — it's about 
+        learning discipline, precision, and the science behind one of humanity's greatest achievements.
     </p>
 </section>
 
-<section>
-    <h2>Steps Learning Plan</h2>
+<!-- PARALLAX 2 -->
+<div class="parallax2"></div>
+
+<!-- STEPS SECTION -->
+<section id="steps">
+    <h2>📚 Steps Learning Plan</h2>
 
     <div class="steps-container">
 
         <div class="step-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/3208/3208750.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/3208/3208750.png" alt="Basic Controls">
             <h3>Step 1 — Basic Controls</h3>
-            <p>Throttle, yoke, rudder, lift, drag, thrust and weight. Understanding how each control affects the aircraft.</p>
+            <p>Throttle, yoke, rudder, lift, drag, thrust and weight.</p>
+            <button class="btn-expand">Learn More</button>
+            <div class="details">
+                <p style="margin-top: 10px; font-size: 0.95rem;">
+                    Understanding how each control affects the aircraft is fundamental. I learned to identify and manipulate all primary flight controls.
+                </p>
+            </div>
         </div>
 
         <div class="step-card">
-            <img src="avion paso 2.png">
-            <h3>Step 2 — Takeoff & Stable Flight</h3>
-            <p>Runway alignment, rotation speed, climb rate, trimming and maintaining stable altitude and heading.</p>
+            <img src="avion paso 2.png" alt="Takeoff">
+            <h3>Step 2 — Takeoff & Flight</h3>
+            <p>Runway alignment, rotation speed, climb rate and trimming.</p>
+            <button class="btn-expand">Learn More</button>
+            <div class="details">
+                <p style="margin-top: 10px; font-size: 0.95rem;">
+                    Executing a smooth takeoff requires precision timing and understanding aircraft weight and aerodynamics.
+                </p>
+            </div>
         </div>
 
         <div class="step-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/535/535239.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/535/535239.png" alt="Navigation">
             <h3>Step 3 — Navigation & Instruments</h3>
-            <p>Reading altimeter, airspeed, attitude indicator, compass and VFR navigation techniques.</p>
+            <p>Reading altimeter, airspeed, attitude indicator and compass.</p>
+            <button class="btn-expand">Learn More</button>
+            <div class="details">
+                <p style="margin-top: 10px; font-size: 0.95rem;">
+                    Cockpit instruments are crucial for safe flight. I mastered instrument interpretation for VFR navigation.
+                </p>
+            </div>
         </div>
 
         <div class="step-card">
-            <img src="avion paso 4.png">
+            <img src="avion paso 4.png" alt="Landing">
             <h3>Step 4 — Landing & Final Flight</h3>
-            <p>Approach patterns, descent control, flare timing and completing a full realistic flight.</p>
+            <p>Approach patterns, descent control and flare timing.</p>
+            <button class="btn-expand">Learn More</button>
+            <div class="details">
+                <p style="margin-top: 10px; font-size: 0.95rem;">
+                    The most challenging aspect: executing a smooth, accurate landing is a true test of pilot skill.
+                </p>
+            </div>
         </div>
 
     </div>
+
+    <!-- MILESTONES -->
+    <h3 style="margin-top: 50px; color: #0a0a0a;">✅ My Milestones</h3>
+    <div class="milestones-grid">
+        <div class="milestone">
+            <input type="checkbox" id="m1">
+            <label for="m1">Understood basic controls</label>
+        </div>
+        <div class="milestone">
+            <input type="checkbox" id="m2">
+            <label for="m2">Successfully took off</label>
+        </div>
+        <div class="milestone">
+            <input type="checkbox" id="m3">
+            <label for="m3">Maintained stable flight</label>
+        </div>
+        <div class="milestone">
+            <input type="checkbox" id="m4">
+            <label for="m4">Navigated successfully</label>
+        </div>
+        <div class="milestone">
+            <input type="checkbox" id="m5">
+            <label for="m5">Landed safely</label>
+        </div>
+        <div class="milestone">
+            <input type="checkbox" id="m6">
+            <label for="m6">Completed full flight</label>
+        </div>
+    </div>
 </section>
 
-<div class="parallax2"></div>
-
-<section>
-    <h2>Final Product</h2>
-    <p>
-        My final product will be a fully recorded demonstration flight where I apply everything I learned 
-        throughout the project. The video will show me performing a complete flight in a simulator — 
-        from takeoff to navigation to landing — using real aviation techniques. 
-        This recording will serve as proof of my progress and as a visual summary of my understanding 
-        of how pilots operate an aircraft in real life.
-    </p>
-</section>
-
+<!-- PARALLAX 3 -->
 <div class="parallax3"></div>
 
+<!-- FINAL PRODUCT SECTION -->
 <section>
-    <h2>Final demonstration</h2>
+    <h2>🎬 Final Demonstration</h2>
     <p>
         This is the final recorded flight where I apply everything I learned during my aviation project. 
         From takeoff to landing, this video shows the complete process using real aviation techniques.
     </p>
 </section>
 
-<div style="text-align: center; margin-top: 20px;">
-    <iframe 
-        width="70%" 
-        height="700" 
-        src="https://www.youtube.com/embed/wZQDH5EsYfo" 
-        frameborder="0" 
-        allowfullscreen
-        style="border-radius: 10px;">
-    </iframe>
-</div>
+<!-- VIDEO SECTION -->
+<section id="video" class="video-container">
+    <h2 style="margin-bottom: 30px;">▶️ Watch My Flight</h2>
+    <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/wZQDH5EsYfo" allowfullscreen></iframe>
+    </div>
+</section>
 
+<!-- FOOTER -->
 <footer>
-    Created by: David Daza Salcedo
+    <p style="font-size: 1.3rem; font-weight: 600;">✈️ Aviation Project</p>
+    <p>Created by: David Daza Salcedo</p>
+    <p style="margin-top: 20px; color: #999;">🎓 Genius Hour Project | Learning Through Simulation</p>
+    <div class="social-links">
+        <a href="https://www.youtube.com/embed/wZQDH5EsYfo" title="YouTube">📺</a>
+        <a href="#" title="Email">📧</a>
+    </div>
 </footer>
 
 <script>
-    // PARALLAX: simulamos el efecto de fondo que se mueve
+    // NAVEGACIÓN STICKY - Mostrar cuando scrolleas
+    let lastScrollTop = 0;
+    const navbar = document.getElementById('navbar');
+    
+    window.addEventListener('scroll', function() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrollTop > 300) {
+            navbar.classList.add('visible');
+        } else {
+            navbar.classList.remove('visible');
+        }
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    });
+
+    // PARALLAX EFFECT
     function updateParallax() {
         const scrolled = window.pageYOffset || document.documentElement.scrollTop;
-
-        document.querySelectorAll('.parallax1, .parallax2, .parallax3').forEach((el, index) => {
-            const speed = 0.3; // ajusta si quieres más o menos movimiento
-            const rect = el.getBoundingClientRect();
+        document.querySelectorAll('.parallax1, .parallax2, .parallax3').forEach((el) => {
+            const speed = 0.3;
             const offsetTop = el.offsetTop;
             const yPos = (scrolled - offsetTop) * speed;
-
             el.style.backgroundPosition = `center ${yPos}px`;
         });
     }
@@ -278,7 +762,7 @@
     window.addEventListener('scroll', updateParallax);
     window.addEventListener('load', updateParallax);
 
-    // Scroll reveal
+    // SCROLL REVEAL ANIMATION
     const sections = document.querySelectorAll("section");
     const reveal = () => {
         sections.forEach(sec => {
@@ -290,6 +774,95 @@
     };
     window.addEventListener("scroll", reveal);
     reveal();
+
+    // EXPANDABLE STEP CARDS
+    document.querySelectorAll('.step-card .btn-expand').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.parentElement.classList.toggle('expanded');
+            this.textContent = this.parentElement.classList.contains('expanded') ? 'Show Less' : 'Learn More';
+        });
+    });
+
+    // CONTADOR ANIMADO DEL PROGRESO
+    function animateCounter(element, target, duration = 2000) {
+        let current = 0;
+        const increment = target / (duration / 16);
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                element.textContent = target;
+                clearInterval(timer);
+            } else {
+                element.textContent = Math.floor(current);
+            }
+        }, 16);
+    }
+
+    // PROGRESS BAR ANIMATION - Sincronizado con el porcentaje
+    window.addEventListener('scroll', function() {
+        const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = window.pageYOffset;
+        const progress = Math.min(Math.round((scrolled / windowHeight) * 100), 100);
+        
+        document.getElementById('progressBar').style.width = progress + '%';
+        document.getElementById('progressText').textContent = progress;
+    });
+
+    // VERTICAL PROGRESS TRACKER - Actualizar barra vertical
+    window.addEventListener('scroll', function() {
+        const progressFill = document.getElementById('progressFill');
+        const progressPercentage = document.getElementById('progressPercentage');
+        
+        if (progressFill && progressPercentage) {
+            const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.pageYOffset;
+            const progress = Math.min(Math.round((scrolled / windowHeight) * 100), 100);
+            
+            progressFill.style.height = progress + '%';
+            progressPercentage.textContent = progress + '%';
+        }
+    });
+
+    // MILESTONES - Guardar en localStorage
+    document.querySelectorAll('.milestone input[type="checkbox"]').forEach(checkbox => {
+        const label = checkbox.nextElementSibling.textContent;
+        checkbox.checked = localStorage.getItem('milestone_' + label) === 'true';
+        
+        checkbox.addEventListener('change', function() {
+            localStorage.setItem('milestone_' + label, this.checked);
+        });
+    });
+
+    // SMOOTH SCROLL PARA LINKS DE NAVEGACIÓN
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // EASTER EGG - Konami Code
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight'];
+    let konamiIndex = 0;
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === konamiCode[konamiIndex]) {
+            konamiIndex++;
+            if (konamiIndex === konamiCode.length) {
+                document.body.style.filter = 'hue-rotate(180deg)';
+                setTimeout(() => {
+                    alert('🎮 You found the secret! Welcome pilot!');
+                    document.body.style.filter = 'none';
+                }, 300);
+                konamiIndex = 0;
+            }
+        } else {
+            konamiIndex = 0;
+        }
+    });
 </script>
 
 </body>
